@@ -3,9 +3,26 @@ var router = express.Router();
 var productModel = require("../models/product");
 var upload = require('../utils/configmulter');
 const fs = require('fs').promises; 
-var sendMail = require('../utils/configmail')
+var sendMail = require('../utils/configmail');
+const userr = require('../models/userr');
+const { JsonWebTokenError } = require('jsonwebtoken');
 
+/**
+ * @swagger
+ * /product/list:
+ *   get:
+ *     summary: Lấy danh sách sản phẩm
+ *     responses:
+ *       200:
+ *         description: Trả về danh sách sản phẩm
+ *         
+ */
+router.get('/list', async function(req, res, next) {
+    var list = await products.find();
+    res.status(200).json(list);
+  });
 
+  
 // lấy toàn bộ ds spham
 router.get("/list", async function(req, res){
     try{
@@ -75,10 +92,8 @@ router.post('/uploads', [upload.array('image', 9)],
     router.post("/send-mail", async function(req, res, next) {
         try {
           const { to, subject } = req.body;
-      
           // Đọc nội dung tệp HTML
           const content = await fs.readFile('bai1.html', 'utf-8');
-      
           const mailOptions = {
             from: "Tứn Nè <a.tuan08101999@gmail.com>",
             to: to,
@@ -95,7 +110,22 @@ router.post('/uploads', [upload.array('image', 9)],
       });
       
 
+router.post("/sign-in", async function(req, res, next) {
+try{
+const {userName, passWord} = req.body;
+var checkUser = await userr.findOne({userName: userName, passWord: passWord})
+if(checkUser){
+    const token = JWT.sign({id: userName},config.SECRETKEY,{expiresIn: '30s'});
+    const refreshToken = JWT.sign({id: userName},config.SECRETKEY,{expiresIn: '1h'})
 
+    res.status(200).json({status: true, message: "thanh cong"});
+}else{
+    res.status(400).json({status: true, message: "khong tim thay"});
+}
+}catch(e){  
+    res.status(400).json({status: false, message: "sai roi" + e});
+}
+})
 
 //kiểu methods Put - Post - Get - Delete
 module.exports = router;

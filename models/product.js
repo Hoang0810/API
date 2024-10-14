@@ -17,7 +17,9 @@ const product = new Schema({
     quantity: {type: Number},
     price: {type: Number},
     category: {type: ObjectId, ref:'category'},
+
+
 });
-module.exports = mongoose.models.Product || mongoose.model('Product', product);
+module.exports = mongoose.models.Product || mongoose.model('Product',product);
 
 // product -----> products

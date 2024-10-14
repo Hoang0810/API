@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+
+
 var productModel = require("../models/product");
 var upload = require('../utils/configmulter');
 const fs = require('fs').promises;
@@ -54,10 +56,10 @@ router.get("/gia-tren-5", async function (req, res) {
 });
 
 // /timsp?name="ten-san-pham".
-router.get("/timsp/", function (req, res) {
+router.get("/timsp", function (req, res) {
     try {
         const { name } = req.query;
-        var item = nhanVien.find(p => p.name == name);
+        var item = productModel.find(p => p.name == name);
         if (item != null) {
             res.status(302).json({ status: true, data: item });
         } else {

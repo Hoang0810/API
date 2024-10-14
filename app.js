@@ -4,26 +4,45 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+
+// Khởi tạo app trước
+var app = express();
+
+
 //config mongoose
 const mongoose = require('mongoose');
 require("./models/category");
 require("./models/product");
+require("./models/userr");
+
+//ASM
+require("./ASMs/CTHD");
+require("./ASMs/danhsachSPyeuthich");
+require("./ASMs/hoadon");
+require("./ASMs/khachhang");
+require("./ASMs/loaisanpham");
+require("./ASMs/payment");
+require("./ASMs/sanpham");
+require("./ASMs/size");
+
 
 //connect database
-mongoose.connect('mongodb+srv://tuanne:Thuytinh0@tuanhoang.8gqcl.mongodb.net/md19201')
+mongoose.connect('mongodb+srv://tuanne:Thuytinh0@tuanhoang.8gqcl.mongodb.net/ASM')
+  // mongoose.connect('mongodb+srv://tuanne:Thuytinh0@tuanhoang.8gqcl.mongodb.net/md19201')
   .then(() => console.log('>>>>>>>>>> DB Connected!!!!!!'))
   .catch(err => console.log('>>>>>>>>> DB Error: ', err));
-
 
 //B1
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var productRouter = require('./routes/product')
+var productRouter = require('./routes/product');
 var nhansuRouter = require('./routes/nhansu');
 var categoryRouter = require('./routes/category');
-var labRouter = require('./routes/lab')
+var labRouter = require('./routes/lab');
+var asmRouter = require('./routes/ASM')
 
-var app = express();
+//ASM
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -39,17 +58,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/product', productRouter);
-app.use('/nhansu',nhansuRouter);
+app.use('/nhansu', nhansuRouter);
 app.use('/category', categoryRouter);
-app.use('/lab',labRouter);
+app.use('/lab', labRouter);
+app.use('/ASM', asmRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
