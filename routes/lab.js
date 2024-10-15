@@ -82,7 +82,7 @@ router.post("/add", async function (req, res) {
     } catch {
         res.status(400).json({ status: false, message: "that bai" })
     }
-})
+});
 
 //Sửa thông tin 
 router.post("/edit", async function (req, res, next) {

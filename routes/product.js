@@ -7,6 +7,8 @@ var sendMail = require('../utils/configmail');
 const userr = require('../models/userr');
 const { JsonWebTokenError } = require('jsonwebtoken');
 
+
+
 /**
  * @swagger
  * /product/list:
@@ -15,8 +17,10 @@ const { JsonWebTokenError } = require('jsonwebtoken');
  *     responses:
  *       200:
  *         description: Trả về danh sách sản phẩm
- *         
+ *       400:
+ *          description: thất bại
  */
+
 router.get('/list', async function(req, res, next) {
     var list = await products.find();
     res.status(200).json(list);
@@ -125,7 +129,9 @@ if(checkUser){
 }catch(e){  
     res.status(400).json({status: false, message: "sai roi" + e});
 }
-})
+});
+
+
 
 //kiểu methods Put - Post - Get - Delete
 module.exports = router;

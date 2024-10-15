@@ -8,6 +8,10 @@ var logger = require('morgan');
 // Khởi tạo app trước
 var app = express();
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./utils/configSwagger');
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument)); // ->đường link dẩn tới 
+
 
 //config mongoose
 const mongoose = require('mongoose');
@@ -40,7 +44,9 @@ var nhansuRouter = require('./routes/nhansu');
 var categoryRouter = require('./routes/category');
 var labRouter = require('./routes/lab');
 var asmRouter = require('./routes/ASM')
-
+var loaiSpRouter = require('./routes/Loaisp');
+var sizeRouter = require('./routes/Size');
+var sanphamRouter = require('./routes/sanpham');
 //ASM
 
 
@@ -62,6 +68,9 @@ app.use('/nhansu', nhansuRouter);
 app.use('/category', categoryRouter);
 app.use('/lab', labRouter);
 app.use('/ASM', asmRouter);
+app.use('/loai-sp', loaiSpRouter);
+app.use('/size', sizeRouter);
+app.use('/san-pham',sanphamRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
