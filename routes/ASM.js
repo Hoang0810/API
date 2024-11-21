@@ -4,7 +4,7 @@ const JWT = require('jsonwebtoken');
 const config = require("../utils/configenv");
 
 
-var khachhangModel = require("../ASMs/khachhang")
+var khachhangModel = require("../ASMs/User")
 
 
 //localhost:3000/ASM/

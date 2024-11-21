@@ -1,8 +1,15 @@
 var express = require('express');
 var router = express.Router();
-
-
 var categoryModel = require('../models/category');
+
+router.get("/list", async function (req, res) {
+    var data = await categoryModel.find();
+    res.json(data)
+
+})
+
+
+
 router.post('/add', async function(req, res , next){
     try{
         const {name, image} = req.body;

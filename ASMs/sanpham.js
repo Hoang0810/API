@@ -10,10 +10,9 @@ const sanpham = new Schema({
         trim: true, // bỏ khoảng trắng 2 đầu
     },
     image: { type: String, required: true},
+    price: {type: Number},
     mota: {type: String},
-    category: {type: ObjectId, ref:'loaisanpham'},
-    size: {type: ObjectId, ref:'size'},
-
+    category: {type: ObjectId, ref:'loaisanpham'}
 
 
 });

@@ -23,7 +23,7 @@ require("./models/userr");
 require("./ASMs/CTHD");
 require("./ASMs/danhsachSPyeuthich");
 require("./ASMs/hoadon");
-require("./ASMs/khachhang");
+require("./ASMs/User");
 require("./ASMs/loaisanpham");
 require("./ASMs/payment");
 require("./ASMs/sanpham");

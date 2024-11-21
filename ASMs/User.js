@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
-const khachhang = new Schema({
+const User = new Schema({
 
     id: { type: ObjectId }, // khóa chính
     name: {
@@ -16,5 +16,5 @@ const khachhang = new Schema({
     diachi: { type: String, },
     role: { type: Number, }
 });
-module.exports = mongoose.models.khachhang || mongoose.model('khachhang', khachhang);
+module.exports = mongoose.models.User || mongoose.model('User', User);
 
