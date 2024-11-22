@@ -8,6 +8,7 @@ const loaisanpham = new Schema({
         required: true, // bắt buộc phải có
         unique: true, // không được trùng
     },
+    image: {type: String}
 });
 module.exports = mongoose.models.loaisanpham || mongoose.model('loaisanpham', loaisanpham);
 // category -----> categories
