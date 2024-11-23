@@ -24,9 +24,9 @@ router.post("/register", async (req, res) => {
 
         // Lưu người dùng vào cơ sở dữ liệu
         const newUser = new User({
-            name : name,
-            password: password,
-            gmail: gmail
+            name ,
+            password,
+            gmail,
         });
 
         await newUser.save();
