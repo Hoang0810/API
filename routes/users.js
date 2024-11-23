@@ -3,9 +3,14 @@ var router = express.Router();
 const bcrypt = require('bcryptjs');
 var User = require("../ASMs/User")
 
+//  users/
+router.get("/list", async(req, res) => {
+  var data = await User.find();
+  res.json(data)
+})
 // Đăng ký người dùng
 router.post("/register", async (req, res) => {
-    const { name, matKhau, gmail } = req.body;
+    const { name, password, gmail } = req.body;
 
     try {
         // Kiểm tra xem email đã tồn tại chưa
@@ -15,12 +20,12 @@ router.post("/register", async (req, res) => {
         }
 
         // Mã hóa mật khẩu
-        const hashedPassword = await bcrypt.hash(matKhau, 10);
+        const hashedPassword = await bcrypt.hash(password, 10);
 
         // Lưu người dùng vào cơ sở dữ liệu
         const newUser = new User({
             name,
-            matKhau: hashedPassword,
+            password: hashedPassword,
             gmail
         });
 
@@ -34,7 +39,7 @@ router.post("/register", async (req, res) => {
 
 // Đăng nhập người dùng
 router.post("/login", async (req, res) => {
-  const { gmail, matKhau } = req.body;
+  const { gmail, password } = req.body;
 
   try {
       // Kiểm tra xem email có tồn tại không
@@ -44,7 +49,7 @@ router.post("/login", async (req, res) => {
       }
 
       // Kiểm tra mật khẩu
-      const isMatch = await bcrypt.compare(matKhau, user.matKhau);
+      const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
           return res.status(400).json({ message: 'Mật khẩu sai' });
       }
