@@ -20,13 +20,13 @@ router.post("/register", async (req, res) => {
         }
 
         // Mã hóa mật khẩu
-        const hashedPassword = await bcrypt.hash(password, 10);
+        // const hashedPassword = await bcrypt.hash(password, 10);
 
         // Lưu người dùng vào cơ sở dữ liệu
         const newUser = new User({
-            name,
-            password: hashedPassword,
-            gmail
+            name : name,
+            password: password,
+            gmail: gmail
         });
 
         await newUser.save();
