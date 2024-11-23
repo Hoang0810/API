@@ -9,8 +9,13 @@ const User = new Schema({
         required: true, // bắt buộc phải có
         trim: true, // bỏ khoảng trắng 2 đầu
     },
-    matKhau: { type: String, require: true, },
-    gmail: { type: String, require: true, },
+    password: { 
+        type: String,
+         require: true, },
+    gmail: { 
+        type: String, 
+        require: true, 
+    },
     gioitinh: { type: String },
     namsinh: { type: String, },
     diachi: { type: String, },
