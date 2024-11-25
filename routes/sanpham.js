@@ -95,11 +95,11 @@ router.put("/update/:id", async (req, res) => {
 });
 
 // API lấy danh sách sản phẩm theo loại
-router.get('/list/:categoryId', async function(req, res) {
+router.get('/list/:category', async function(req, res) {
     try {
-        const { categoryId } = req.params;  // Sử dụng req thay vì request
+        const { category } = req.params;  // Sử dụng req thay vì request
         // Lấy danh sách sản phẩm thuộc loại đó
-        const list = await productModel.find({ categoryId });
+        const list = await productModel.find({ category });
         
         // Sử dụng res thay vì response
         res.status(200).json({ status: true, message: "Mission completed", products: list });
