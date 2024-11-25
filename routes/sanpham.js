@@ -128,6 +128,27 @@ router.put("/update/:id", async (req, res) => {
     // }
 });
 
+// API lấy danh sách sản phẩm theo loại
+router.get('/sanpham/theo-loai/:categoryId', async (req, res) => {
+    try {
+      const categoryId = req.params.categoryId;
+  
+      // Truy vấn danh sách sản phẩm theo categoryId (ref trong sanpham)
+      const sanphamList = await Sanpham.find({ category: categoryId })
+        .populate('category', 'name') // Populate để lấy thông tin tên loại sản phẩm, nếu cần
+        .exec();
+  
+      if (!sanphamList || sanphamList.length === 0) {
+        return res.status(404).json({ message: 'Không có sản phẩm trong loại này.' });
+      }
+  
+      res.status(200).json(sanphamList);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Lỗi server, vui lòng thử lại sau.' });
+    }
+  });
+
 
 /**
  * @swagger
