@@ -53,23 +53,6 @@ router.post("/add", async function (req, res) {
     await productModel.create(itemAdd);
     res.status(200).json({ status: true, message: "thanh cong" })
 
-    // try {
-    //     const token = req.header("Authorization").split(' ')[1];
-    //     if (token) {
-    //         JWT.verify(token, config.SECRETKEY, async function (err, id) {
-    //             if (err) {
-    //                 res.status(403).json({ "status": 403, "err": err });
-    //             } else {
-
-    //             }
-    //         });
-    //     } else {
-    //         res.status(401).json({ "status": 401 });
-    //     }
-
-    // } catch {
-    //     res.status(400).json({ status: false, message: "that bai" })
-    // }
 });
 
 router.delete("/delete/:id", async (req, res) => {
@@ -112,25 +95,21 @@ router.put("/update/:id", async (req, res) => {
 });
 
 // API lấy danh sách sản phẩm theo loại
-router.get('/theo-loai/:categoryId', async (req, res) => {
+router.get('/list/:categoryId', async function(req, res) {
     try {
-      const categoryId = req.params.categoryId;
-  
-      // Truy vấn danh sách sản phẩm theo categoryId (ref trong sanpham)
-      const sanphamList = await productModel.find({ category: categoryId })
-        .populate('category', 'name') // Populate để lấy thông tin tên loại sản phẩm, nếu cần
-        .exec();
-  
-      if (!sanphamList || sanphamList.length === 0) {
-        return res.status(404).json({ message: 'Không có sản phẩm trong loại này.' });
-      }
-  
-      res.status(200).json(sanphamList);
+        const { categoryId } = req.params;  // Sử dụng req thay vì request
+        // Lấy danh sách sản phẩm thuộc loại đó
+        const list = await productModel.find({ categoryId });
+        
+        // Sử dụng res thay vì response
+        res.status(200).json({ status: true, message: "Mission completed", products: list });
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Lỗi server, vui lòng thử lại sau.' });
+        // Sử dụng res thay vì response
+        res.status(400).json({ status: false, message: 'Mission failed', products: [] });
     }
-  });
+});
+
+
 
 
 /**
