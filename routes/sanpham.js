@@ -109,32 +109,15 @@ router.put("/update/:id", async (req, res) => {
     }
     res.status(200).json({ status: true, data: khachhang });
 
-    // try {
-    //     const token = req.header("Authorization").split(' ')[1];
-    //     if (token) {
-    //         JWT.verify(token, config.SECRETKEY, async function (err, id) {
-    //             if (err) {
-    //                 res.status(403).json({ "status": 403, "err": err });
-    //             } else {
-
-    //             }
-    //         });
-    //     } else {
-    //         res.status(401).json({ "status": 401 });
-    //     }
-
-    // } catch (error) {
-    //     res.status(500).json({ status: false, message: error.message });
-    // }
 });
 
 // API lấy danh sách sản phẩm theo loại
-router.get('/sanpham/theo-loai/:categoryId', async (req, res) => {
+router.get('/theo-loai/:categoryId', async (req, res) => {
     try {
       const categoryId = req.params.categoryId;
   
       // Truy vấn danh sách sản phẩm theo categoryId (ref trong sanpham)
-      const sanphamList = await Sanpham.find({ category: categoryId })
+      const sanphamList = await productModel.find({ category: categoryId })
         .populate('category', 'name') // Populate để lấy thông tin tên loại sản phẩm, nếu cần
         .exec();
   
