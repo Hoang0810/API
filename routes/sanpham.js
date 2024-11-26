@@ -95,17 +95,52 @@ router.put("/update/:id", async (req, res) => {
 });
 
 // API lấy danh sách sản phẩm theo loại
-router.get('/list/:category', async function(req, res) {
+router.get('/list/:category', async function (req, res) {
     try {
         const { category } = req.params;  // Sử dụng req thay vì request
         // Lấy danh sách sản phẩm thuộc loại đó
         const list = await productModel.find({ category });
-        
+
         // Sử dụng res thay vì response
         res.status(200).json({ status: true, message: "Mission completed", products: list });
     } catch (error) {
-        // Sử dụng res thay vì response
+
         res.status(400).json({ status: false, message: 'Mission failed', products: [] });
+    }
+});
+
+// Truy vấn sản phẩm theo ID
+router.get('/product-detail', async function (req, res) {
+    try {
+        const { id } = req.query;  // Lấy id từ query string trong URL
+        
+        // Kiểm tra xem id có được truyền vào không
+        if (!id) {
+            return res.status(400).json({ status: false, message: 'Product ID is required', productdetail: null });
+        }
+
+        // Tìm sản phẩm theo id (sử dụng findById())
+        const productdetail = await productModel.findById(id).populate('category'); // populate 'category' nếu cần thông tin đầy đủ từ collection 'loaisanpham'
+
+        // Kiểm tra nếu không tìm thấy sản phẩm
+        if (!productdetail) {
+            return res.status(404).json({ status: false, message: 'Product not found', productdetail: null });
+        }
+
+        // Trả kết quả về client
+        res.status(200).json({
+            status: true,
+            message: 'Mission completed',
+            productdetail: productdetail
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            status: false,
+            message: 'Mission failed',
+            productdetail: null
+        });
     }
 });
 
