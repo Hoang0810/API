@@ -13,8 +13,7 @@ const sanpham = new Schema({
     price: {type: Number},
     mota: {type: String},
     category: {type: ObjectId, ref:'loaisanpham'}
-
-
 });
+
 module.exports = mongoose.models.sanpham || mongoose.model('Sanpham', sanpham);
 
