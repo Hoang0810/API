@@ -38,20 +38,16 @@ router.post("/login", async (req, res) => {
   const { gmail, password } = req.body;
 
   try {
-      // Kiểm tra xem email có tồn tại không
       const user = await User.findOne({ gmail });
       if (!user) {
           return res.status(400).json({ message: 'Tài khoản không tồn tại' });
       }
 
-      // Kiểm tra mật khẩu
       const isMatch = await (password);
       if (!isMatch) {
           return res.status(400).json({ message: 'Mật khẩu sai' });
       }
-
-      // Nếu mật khẩu đúng, trả về thông tin người dùng
-      res.json({status: true,  message: 'Đăng nhập thành công', user: { id: user._id, name: user.name, gmail: user.gmail } });
+      res.json({status: true,  message: 'Đăng nhập thành công', user: { password: user.password, gmail: user.gmail } });
   } catch (error) {
       res.status(500).json({ message: 'Đã có lỗi xảy ra', error });
   }
