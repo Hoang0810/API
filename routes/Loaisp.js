@@ -13,8 +13,13 @@ var sendMail = require('../utils/configmail')
 
 // lấy toàn bộ ds
 router.get("/list", async function (req, res) {
-    var data = await loaiSpModel.find();
-    res.json(data)
+    try{
+        var data = await loaiSpModel.find();
+        res.status(200).json({ status: true, message: "thanh cong", category: data} )
+    }catch{
+        res.status(400).json({ status: false, message: "that bai" })
+    }
+   
 });
 
 //add
